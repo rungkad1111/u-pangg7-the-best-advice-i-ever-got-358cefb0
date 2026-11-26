@@ -14,6 +14,11 @@ import { mkdirSync, writeFileSync } from "node:fs";
 
 const line =
   "My grandfather told me never to lend money I couldn't afford to lose, and I have never lost a friend over a loan since.";
+// Gate check (kit: 1-200 characters, one sentence): fail loudly instead of
+// shipping a bad entry.
+if (line.length < 1 || line.length > 200) {
+  throw new Error(`entry length ${line.length} outside gate 1-200`);
+}
 const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 mkdirSync(outDir, { recursive: true });
 writeFileSync(`${outDir}/entry.txt`, line, "utf8");
